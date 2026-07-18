@@ -23,7 +23,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y librsvg2-bin
 
       - name: "Avatar: build"
-        run: make -C avatar svg png
+        run: make -C avatar png
 
       - name: "Artifacts: upload"
         uses: actions/upload-artifact@v4

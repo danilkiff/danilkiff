@@ -1,4 +1,6 @@
-SVG := $(wildcard *.svg)
+# wildcard непригоден: в свежем чекауте svg ещё не сгенерированы
+PALETTES := $(shell python3 -c 'import generate; print(" ".join(sorted(generate.PALETTES)))')
+SVG := $(addsuffix .svg,$(PALETTES))
 PNG := $(SVG:.svg=.png)
 
 .PHONY: help svg png clean
@@ -8,7 +10,9 @@ help:
 	@echo "png    - конвертировать *.svg в *.png (1024x1024, инкрементально)"
 	@echo "clean  - удалить сгенерированные svg и png"
 
-svg:
+svg: $(SVG)
+
+$(SVG): generate.py
 	python3 generate.py
 
 png: $(PNG)

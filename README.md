@@ -15,23 +15,32 @@
 
 ## :eight_pointed_black_star: For fun (research track)
 
-Exploring symbolic reasoning, hybrid knowledge graphs, and blockchain-tethered
-AI, focusing on reproducible DevOps/MLOps infrastructures with NixOS and ZFS as
-foundations for prototyping.
+Side quests run as small experiments: a concrete question, a measurement
+setup, a written answer. Finished ones get archived; results stay public.
 
-- Scaling AI experiments across local GPU/HPC clusters
-- Consolidating microservices into domain-driven modules
-- Publishing research essays on reasoning and distributed design
+- [payments-book](https://github.com/danilkiff/payments-book) - an open book
+  (RU) on how payments actually work;
+  DOI [10.5281/zenodo.19884844](https://doi.org/10.5281/zenodo.19884844)
+- [redis-failure-mode](https://github.com/danilkiff/redis-failure-mode) -
+  measuring acknowledged-write loss in Redis, Valkey and KeyDB under
+  failover and power loss
+- [pow](https://github.com/danilkiff/pow) - SHA-256 proof-of-work: Python
+  reference vs Rust + SHA-NI solver, with honest statistics
+- [jwt-performance](https://github.com/danilkiff/jwt-performance) - what
+  JWT/JWE verification actually costs inside Spring Cloud Gateway
+- [go-lgbm-serving](https://github.com/danilkiff/go-lgbm-serving) - serving
+  a Python-trained LightGBM model from Go, bit-exact, with native SHAP
+  reason codes
+- [macdjvu](https://github.com/danilkiff/macdjvu) - a native macOS DjVu
+  reader, built because none existed worth using
+- [sre.pq3.ru](https://sre.pq3.ru) - an interactive map of SRE practices as
+  an explicit prerequisite graph
 
 ![Python](https://img.shields.io/badge/-Python-000000?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/-FastAPI-000000?logo=fastapi&logoColor=white)
-![LangGraph](https://img.shields.io/badge/-LangGraph-000000?logo=abstract&logoColor=white)
-![Blockchain](https://img.shields.io/badge/-Blockchain-000000?logo=blockchaindotcom&logoColor=white)
+![Go](https://img.shields.io/badge/-Go-000000?logo=go&logoColor=white)
+![Rust](https://img.shields.io/badge/-Rust-000000?logo=rust&logoColor=white)
+![Swift](https://img.shields.io/badge/-Swift-000000?logo=swift&logoColor=white)
 ![LLM](https://img.shields.io/badge/-LLM-000000?logo=openaigym&logoColor=white)
-![Neo4j](https://img.shields.io/badge/-Neo4j-000000?logo=neo4j&logoColor=white)
-![NixOS](https://img.shields.io/badge/-NixOS-000000?logo=nixos&logoColor=white)
-![ZFS](https://img.shields.io/badge/-ZFS-000000?logo=freebsd&logoColor=white)
-![Gitea](https://img.shields.io/badge/-Gitea-000000?logo=gitea&logoColor=white)
 ![LaTeX](https://img.shields.io/badge/-LaTeX-000000?logo=latex&logoColor=white)
 ![Vim](https://img.shields.io/badge/-Vim-000000?logo=vim&logoColor=white)
 

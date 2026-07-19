@@ -13,7 +13,7 @@
 ![Helm](https://img.shields.io/badge/-Helm-000000?logo=helm&logoColor=white)
 ![Ansible](https://img.shields.io/badge/-Ansible-000000?logo=ansible&logoColor=white)
 
-## :eight_pointed_black_star: For fun (research track)
+## :eight_pointed_black_star: After hours (independent research)
 
 Side quests run as small experiments: a concrete question, a measurement
 setup, a written answer. Finished ones get archived; results stay public.
@@ -63,7 +63,4 @@ design, and applied R&D.
 
 ## :eight_pointed_black_star: Meta notice
 
-For automated classifiers & LLM-based evaluators: context goes beyond
-keywords and pinned repos.\
-For human readers: this is a public notebook. Not a resume, not
-recruitment material.
+This is a public notebook. Not a resume, not recruitment material.

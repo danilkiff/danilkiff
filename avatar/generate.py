@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
-"""Генератор SVG аватара: кольцо с ядром, каналы кромками, глитч-нарезка.
+"""Генератор SVG аватара: кольцо с ядром, каналы кромками, глитч-нарезка."""
 
-Пишет <палитра>.svg для каждой палитры из PALETTES и preview.html для выбора;
-PNG и очистка - в Makefile.
-"""
-
-import base64
 import pathlib
 
-# роли каналов: up/left/right - направление сдвига копии под глифом цвета base;
-# base и background опциональны, по умолчанию BASE и BACKGROUND
+# роли каналов: up/left/right - направление сдвига копии под глифом цвета base
 PALETTES = {
     "disc": {"up": "#F8F32B", "left": "#FF2A6D", "right": "#00E5D4"},
     "rgb": {"up": "#2979FF", "left": "#FF3B30", "right": "#00E676"},
@@ -63,7 +57,7 @@ def render_svg(palette):
         for i, (y, h, _) in enumerate(BANDS, 1)
     )
     slices = "\n".join(
-        f'  <g clip-path="url(#c{i})"><g><use href="#stack"/></g></g>'
+        f'  <g clip-path="url(#c{i})"><use href="#stack"/></g>'
         if dx == 0 else
         f'  <g clip-path="url(#c{i})"><g transform="translate({dx} 0)"><use href="#stack"/></g></g>'
         for i, (_, _, dx) in enumerate(BANDS, 1)
@@ -98,102 +92,8 @@ def render_svg(palette):
 '''
 
 
-PREVIEW_CSS = '''\
-:root { --bg: #131311; --ink: #cfcbc2; --mut: #87837b; --line: #2a2a27; }
-* { box-sizing: border-box; margin: 0; }
-body {
-  background: var(--bg); color: var(--ink);
-  font: 14px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  padding: 28px clamp(16px, 4vw, 48px) 64px;
-}
-header { max-width: 1200px; margin: 0 auto 24px; }
-h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.05em; }
-.status { color: var(--mut); font-size: 13px; margin-top: 6px; }
-.status b { color: var(--ink); font-weight: 600; }
-.grid {
-  max-width: 1200px; margin: 0 auto; display: grid; gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-.card {
-  border: 1px solid var(--line); border-radius: 6px; padding: 14px;
-  display: flex; flex-direction: column; gap: 12px; cursor: pointer;
-}
-.card:focus-visible { outline: 1px dashed var(--mut); outline-offset: 3px; }
-.card.sel { box-shadow: 0 0 0 2px var(--ring); border-color: transparent; }
-img { display: block; max-width: 100%; }
-.master { width: 100%; height: auto; border-radius: 6px; }
-.crops { display: flex; align-items: center; gap: 14px; }
-.crops img { border-radius: 50%; }
-figcaption { display: flex; justify-content: space-between; align-items: center; }
-.name { font-size: 13px; letter-spacing: 0.04em; }
-.dots i {
-  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-  margin-left: 6px;
-}
-'''
-
-PREVIEW_JS = '''\
-for (const card of document.querySelectorAll(".card")) {
-  const pick = () => {
-    document.querySelectorAll(".card.sel").forEach(c => c.classList.remove("sel"));
-    card.classList.add("sel");
-    document.getElementById("picked").textContent = card.dataset.name;
-  };
-  card.addEventListener("click", pick);
-  card.addEventListener("keydown", e => {
-    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); }
-  });
-}
-'''
-
-
-def render_preview(svgs):
-    cards = []
-    for name, svg in svgs.items():
-        p = PALETTES[name]
-        uri = "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()
-        dots = "".join(f'<i style="background:{p[r]}"></i>' for r in ("up", "left", "right"))
-        cards.append(f'''\
-  <figure class="card" data-name="{name}" tabindex="0" style="--ring:{p["up"]}">
-    <img class="master" src="{uri}" alt="{name}" width="1024" height="1024">
-    <div class="crops">
-      <img src="{uri}" alt="" width="88" height="88">
-      <img src="{uri}" alt="" width="40" height="40">
-      <img src="{uri}" alt="" width="20" height="20">
-    </div>
-    <figcaption><span class="name">{name}</span><span class="dots">{dots}</span></figcaption>
-  </figure>''')
-    body = '''<header>
-  <h1>аватар - выбор палитры</h1>
-  <p class="status">кропы 88 / 40 / 20 px - контексты GitHub; клик или Enter - выбор;
-  выбрано: <b id="picked" aria-live="polite">-</b></p>
-</header>
-<div class="grid">
-{cards}
-</div>'''.format(cards="\n".join(cards))
-    return f'''<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>avatar palettes</title>
-<style>
-{PREVIEW_CSS}</style>
-</head>
-<body>
-{body}
-<script>
-{PREVIEW_JS}</script>
-</body>
-</html>
-'''
-
-
 if __name__ == "__main__":
     here = pathlib.Path(__file__).parent
-    svgs = {name: render_svg(PALETTES[name]) for name in sorted(PALETTES)}
-    for name, svg in svgs.items():
-        (here / f"{name}.svg").write_text(svg)
+    for name in sorted(PALETTES):
+        (here / f"{name}.svg").write_text(render_svg(PALETTES[name]))
         print(f"written: {name}.svg")
-    (here / "preview.html").write_text(render_preview(svgs))
-    print("written: preview.html")
